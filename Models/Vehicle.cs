@@ -24,4 +24,13 @@ public class Vehicle
     public double Price { get; set; }
     [Column("color")]
     public string Color { get; set; }
+
+    public Vehicle(string branch, string model,int year, string price, string color)
+    {
+        Branch = branch;
+        Model = model;
+        Year = year;
+        Price = double.Parse(price);
+        Color = color;
+    }
 }
