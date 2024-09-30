@@ -9,7 +9,7 @@ namespace ejemploApiConServicios.Models;
 [Table("Vehicles")]
 public class Vehicle
 {
-
+//creacion de la tabla vehicle con sus propiedades
     [Key]
     [Column("id")]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
