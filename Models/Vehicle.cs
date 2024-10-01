@@ -27,8 +27,8 @@ public class Vehicle
 
     public Vehicle(string branch, string model,int year, string price, string color)
     {
-        Branch = branch;
-        Model = model;
+        Branch = branch.ToLower().Trim();
+        Model = model.ToLower().Trim();
         Year = year;
         Price = double.Parse(price);
         Color = color;

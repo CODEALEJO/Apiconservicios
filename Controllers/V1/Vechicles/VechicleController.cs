@@ -1,38 +1,19 @@
 using ejemploApiConServicios.Data;
 using ejemploApiConServicios.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace ejemploApiConServicios.Controllers;
-[ApiController]
-[Route("api/[controller]")]
-public class VechicleController : ControllerBase
+//este controlador contiene el constructor y se el pone partial para poder ser heredado en los otros controladores.
+namespace ejemploApiConServicios.Controllers
 {
-    private readonly ApplicationDbcontext _context;
-
-    public VechicleController(ApplicationDbcontext context)
+    [ApiController]
+    [Route("api/V1/vehicles")]
+    public partial class VechicleController : ControllerBase
     {
-        _context = context;
-    }
-
-//trae todos los vehiculos
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Vehicle>>> GetAllVehicles()
-    {
-        return await _context.Vehicles.ToListAsync();
-    }
-
-//trae vehiculos por el ID
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Vehicle>> GetVehicleById(int id)
-    {
-        var vehicle = await _context.Vehicles.FindAsync(id);
-        if (vehicle == null)
+        private readonly ApplicationDbcontext _context;
+        public VechicleController(ApplicationDbcontext context)
         {
-            return NotFound();
+            _context = context;
         }
-        return vehicle;
     }
-
 }
+
