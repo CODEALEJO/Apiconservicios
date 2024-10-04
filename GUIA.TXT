@@ -1,0 +1,28 @@
+instalar paquetes
+
+crear carpeta de modelos
+crear data y dentro el appdbcontext
+usar los controllers de cada clase
+crear DTO
+en el DTO van las validaciones
+en la clase va colum, table y foreygn key 
+hacer migraciones
+en el controlador siempre por buenas practicas dejar el controlador padre con el ctor con el partial y el resto simplemente hereda
+
+
+env.= 
+DB_HOST = 
+DB_PORT = 
+DB_DATABASE = 
+DB_USERNAME = 
+DB_PASSWORD = 
+
+JWT_SECRET_KEY = SELECT uuid(); en la base de datos y lo prgo aqui
+JWT_ISSUER = http://localhost: de la terminal
+JWT_AUDIENCE = public para q cualquiera pueda entrar
+JWT_EXPIRES_IN = 3 esto es tiempo en minutos
+
+Para el jwt instalo paquete, pongo en el .env mis cosas, creo una carpeta config y una clase jwt, ahi pego el metodo, para que el metodo funcione debo asegurarme de tener una clase de usuario
+
+
+no he entendido bien servicios y repisitori
