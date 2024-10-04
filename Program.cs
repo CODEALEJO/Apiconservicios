@@ -1,5 +1,7 @@
 using DotNetEnv;
 using ejemploApiConServicios.Data;
+using ejemploApiConServicios.Interface;  
+using ejemploApiConServicios.Services;  
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -23,7 +25,10 @@ var mySqlConnection = $"server={dbHost};port={dbPort};database={dbDatabaseName};
 builder.Services.AddDbContext<ApplicationDbcontext>(options =>
     options.UseMySql(mySqlConnection, ServerVersion.Parse("8.0.20-mysql")));
 
-// Configurar la autenticación JWT QUE SIEMPRE SE DEBE HACER
+// Registrar IVehicleInterface e implementación
+builder.Services.AddScoped<IVehicleInterface, VehicleServices>();
+
+// Configurar la autenticación JWT
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -93,4 +98,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 
