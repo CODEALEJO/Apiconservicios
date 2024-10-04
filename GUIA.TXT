@@ -27,3 +27,7 @@ En el program debo de pegar dos cosas grandes para que eso me funcione en el swa
 
 
 no he entendido bien servicios y repisitori
+
+
+tengo que hacer el login para que me genere de manera correcta el token en el repo de samuel
+tengo que separar bien el tema de los controladores, servicios y interfaces 

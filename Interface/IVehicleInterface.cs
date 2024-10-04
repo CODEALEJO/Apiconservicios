@@ -1,7 +1,7 @@
 using ejemploApiConServicios.Models;
 
-namespace ejemploApiConServicios.Repositories;
-public interface IVehicleRepository
+namespace ejemploApiConServicios.Interface;
+public interface IVehicleInterface
 {
     Task<IEnumerable<Vehicle>>GetVehicles();
     Task<Vehicle> GetVehicleById(int id);

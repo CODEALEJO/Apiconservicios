@@ -8,7 +8,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Cargar las variables de entorno
+// Cargar las variables de entorno de la base de datos
 Env.Load();
 builder.Configuration.AddEnvironmentVariables();
 
@@ -46,7 +46,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Configuración de Swagger PARA QUE SE VEAN LOS CANDADOS 
+// Configuración de Swagger 
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "EjemploApi", Version = "v1" });

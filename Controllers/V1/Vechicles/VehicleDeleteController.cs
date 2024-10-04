@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -6,6 +7,7 @@ namespace ejemploApiConServicios.Controllers
     public partial class VechicleController : ControllerBase
     {
         [HttpDelete("{id}")]
+        [Authorize]
         [SwaggerOperation(
         Summary = "Deletes a vehicle by ID",
         Description = "Deletes a specific vehicle from the database by its ID. Returns 404 if the vehicle does not exist."

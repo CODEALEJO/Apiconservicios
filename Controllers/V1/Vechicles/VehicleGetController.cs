@@ -1,4 +1,5 @@
 using ejemploApiConServicios.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
@@ -12,6 +13,7 @@ namespace ejemploApiConServicios.Controllers
     {
         //trae todos los vehiculos
         [HttpGet]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Return all vehicles",
             Description = "Gets a list of all vehicles in the database."
