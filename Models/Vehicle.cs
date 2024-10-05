@@ -25,5 +25,14 @@ public class Vehicle
     [Column("color")]
     public string Color { get; set; }
 
+     public Vehicle(string branch, string model, int year, double price, string color)
+    {
+        Branch = branch.ToLower().Trim();
+        Model = model.ToLower().Trim();
+        Year = year;
+        Price = price;
+        Color = color.ToLower().Trim();
+    }
+
     
 }

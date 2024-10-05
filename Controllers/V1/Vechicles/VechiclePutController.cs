@@ -10,8 +10,8 @@ namespace ejemploApiConServicios.Controllers
     {
         [HttpPut]
         [SwaggerOperation(
-        Summary = "Returns all vehicles",
-        Description = "Returns a list of all vehicles in the database."
+        Summary = "Update a Vechicle by ID",
+        Description = "Updates a Vechicle"
         )]
         [SwaggerResponse(200, "The vehicles were retrieved successfully.")]
         [SwaggerResponse(500, "An internal server error occurred.")]
@@ -43,7 +43,7 @@ namespace ejemploApiConServicios.Controllers
             
         await _VehicleInterface.UpdateVehicle(vehicle);
         return NoContent();
-        
+
         }
     }
 }

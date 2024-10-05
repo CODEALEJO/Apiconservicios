@@ -52,13 +52,31 @@ public class VehicleServices : IVehicleInterface
     }
 
 
-    public Task<Vehicle> AddVehicle(Vehicle vehicle)
+    public async Task<Vehicle> AddVehicle(Vehicle vehicle)
     {
-        throw new NotImplementedException();
+        if (vehicle == null)
+        {
+            throw new ArgumentNullException(nameof(vehicle), "El vehículo no puede ser nulo.");
+        }
+
+        try
+        {
+            await _context.Vehicles.AddAsync(vehicle);
+            await _context.SaveChangesAsync();
+            return vehicle;
+        }
+        catch (DbUpdateException dbEx)
+        {
+            throw new Exception("Error al agregar el vehículo a la base de datos.", dbEx);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Ocurrió un error inesperado al agregar el vehículo.", ex);
+        }
     }
 
 
-    public async Task <Vehicle> UpdateVehicle(Vehicle vehicle)
+    public async Task<Vehicle> UpdateVehicle(Vehicle vehicle)
     {
         if (vehicle == null)
         {
