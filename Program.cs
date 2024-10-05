@@ -1,7 +1,7 @@
 using DotNetEnv;
 using ejemploApiConServicios.Data;
-using ejemploApiConServicios.Interface;  
-using ejemploApiConServicios.Services;  
+using ejemploApiConServicios.Interface;
+using ejemploApiConServicios.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -79,6 +79,7 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+    c.EnableAnnotations(); //para poder que se vean las annotations en el swagger
 });
 
 var app = builder.Build();

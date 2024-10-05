@@ -7,7 +7,7 @@ public interface IVehicleInterface
     Task<Vehicle> GetVehicleById(int id);
     Task<Vehicle> AddVehicle(Vehicle vehicle);
     Task<Vehicle> UpdateVehicle(Vehicle vehicle);
-    Task DeleteVehicle(int id);
+    Task DeleteVehicle(int id); //ya esta lista
 
     Task<bool>CheckExistence(int id);//mirar si existe
 }

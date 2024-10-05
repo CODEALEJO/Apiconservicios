@@ -11,10 +11,16 @@ public class VehicleServices : IVehicleInterface
     {
         _context = context;
     }
-    
-    public Task<Vehicle> AddVehicle(Vehicle vehicle)
+
+
+    public async Task<Vehicle> GetVehicleById(int id)//logica traer por id
     {
-        throw new NotImplementedException();
+        return await _context.Vehicles.FindAsync(id);
+    }
+
+    public async Task<IEnumerable<Vehicle>> GetVehicles()//logica de traer todos
+    {
+        return await _context.Vehicles.ToListAsync();
     }
 
     public async Task<bool> CheckExistence(int id)
@@ -34,19 +40,18 @@ public class VehicleServices : IVehicleInterface
         }
     }
 
-    public Task<Vehicle> GetVehicleById(int id)
+
+    public Task<Vehicle> AddVehicle(Vehicle vehicle)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Vehicle>> GetVehicles()
-    {
-        throw new NotImplementedException();
-    }
 
     public Task<Vehicle> UpdateVehicle(Vehicle vehicle)
     {
         throw new NotImplementedException();
     }
+
+
 }
 
