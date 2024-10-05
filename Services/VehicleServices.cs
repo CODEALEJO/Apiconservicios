@@ -25,8 +25,19 @@ public class VehicleServices : IVehicleInterface
 
     public async Task<bool> CheckExistence(int id)
     {
-        // Verificar si el vehículo existe en la base de datos
-        return await _context.Vehicles.AnyAsync(v => v.Id == id);
+        try
+        {
+            // Verificar si el vehículo existe en la base de datos
+            return await _context.Vehicles.AnyAsync(v => v.Id == id);
+        }
+        catch (DbUpdateException dbEx)
+        {
+            throw new Exception("Error al agregar el vehículo a la base de datos.", dbEx);//mensaje por error en la base de dato
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Ocurrió un error inesperado al agregar el vehículo.", ex);//mensaje por cualquier otro error
+        }
     }
 
 
@@ -47,9 +58,27 @@ public class VehicleServices : IVehicleInterface
     }
 
 
-    public Task<Vehicle> UpdateVehicle(Vehicle vehicle)
+    public async Task <Vehicle> UpdateVehicle(Vehicle vehicle)
     {
-        throw new NotImplementedException();
+        if (vehicle == null)
+        {
+            throw new ArgumentNullException(nameof(vehicle));//el vehiculo no puede ser null
+        }
+        try
+        {
+            _context.Entry(vehicle).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return vehicle;
+        }
+        catch (DbUpdateException dbEx)
+        {
+            throw new Exception("Error al actualizar el vehículo en la base de datos.", dbEx);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Ocurrió un error inesperado al actualizar el vehículo.", ex);
+        }
+
     }
 
 
