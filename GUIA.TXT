@@ -33,3 +33,5 @@ CONTROLADORES= lo que va en el controlador es la validacion con data annotation(
 
 Para los Seeders: Debo de crear la carpeta de Seeders y creo las clases de los que necesito seeders le creo una propiedad seed y luego de eso me voy al data
 Debo de poner en mi applicationDbcontext OnModelCreating Para que me creer y llamar a las clases creadas en seeders
+
+RECOMENDACION: SI VOY A CREAR SEEDERS ES MEJOR CREAR PRIMERO UNA MIGRACION CON SOLO TODAS LAS TABLAS Y annotatioN, LUEGO DE ESO UNA MIGRACION PARA LOS SEEDERS
