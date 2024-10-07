@@ -12,7 +12,7 @@ namespace ejemploApiConServicios.Migrations
 {
     [DbContext(typeof(ApplicationDbcontext))]
     [Migration("20241007034132_primeramigracion")]
-    partial class primeramigracion
+    partial class Primeramigracion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ejemploApiConServicios.Migrations
 {
     /// <inheritdoc />
-    public partial class primeramigracion : Migration
+    public partial class Primeramigracion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
