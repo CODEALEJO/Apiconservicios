@@ -82,6 +82,11 @@ builder.Services.AddSwaggerGen(c =>
     c.EnableAnnotations(); //para poder que se vean las annotations en el swagger
 });
 
+
+builder.Services.AddScoped<ITokenService, TokenServices>();
+
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

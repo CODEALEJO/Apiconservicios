@@ -1,4 +1,5 @@
 using ejemploApiConServicios.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 namespace ejemploApiConServicios.Controllers
@@ -6,6 +7,7 @@ namespace ejemploApiConServicios.Controllers
     public partial class VechicleController : ControllerBase
     {
         [HttpGet]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Returns all vehicles",
             Description = "Returns a list of all vehicles from the database."
@@ -21,6 +23,7 @@ namespace ejemploApiConServicios.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         [SwaggerOperation(
             Summary = "Returns a vehicle by ID",
             Description = "Returns a specific vehicle from the database by its ID."
@@ -29,15 +32,15 @@ namespace ejemploApiConServicios.Controllers
         [SwaggerResponse(404, "If no vehicle is found for the given ID.")]
         [SwaggerResponse(500, "An internal server error occurred.")]
         //creo una tarea async con el nombre de el metodo http
-          public async Task<ActionResult<Vehicle>> GetById(int id )
-          {
+        public async Task<ActionResult<Vehicle>> GetById(int id)
+        {
             var vehicle = await _VehicleInterface.GetVehicleById(id);
             if (vehicle == null)
             {
                 return NotFound("Vehicle not found");
             }
             return Ok(vehicle);
-          }
+        }
 
     }
 }
