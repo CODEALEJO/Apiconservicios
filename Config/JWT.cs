@@ -1,59 +1,108 @@
+using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ejemploApiConServicios.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc;
+using ejemploApiConServicios.DTOS;
+using ejemploApiConServicios.Models;
+using ejemploApiConServicios.Data;
 
+namespace ejemploApiConServicios.Config;
 
-namespace ejemploApiConServicios.config
+[ApiController]
+[Route("api/v1/users")]
+public class JWT : ControllerBase
 {
-    public partial class JwtTokenGenerator
+    // Property to access the database context.
+    private readonly ApplicationDbcontext Context;
+
+    // Property to access the application configuration.
+    private readonly IConfiguration _configuration;
+
+    // Property to handle password hashing.
+    private readonly PasswordHasher<User> _passwordHasher;
+
+    // Constructor of the controller.
+    // Initializes the database context, configuration, and passwordHasher.
+    public JWT(ApplicationDbcontext context, IConfiguration configuration)
     {
-        public static string GenerateJwtToken(User user)
+        Context = context;
+        _configuration = configuration;
+        _passwordHasher = new PasswordHasher<User>();
+    }
+
+    // Method to log in a user.
+    // Uses the [HttpPost("Login")] attribute to define the endpoint route.
+    [HttpPost("Login")]
+    public async Task<IActionResult> Login([FromBody] UserDTO userDTO)
+    {
+        // Check if the DTO model is valid.
+        if (!ModelState.IsValid)
         {
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-            };
-
-            // Obtener variables de entorno
-            var jwtKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
-            var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
-            var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
-            var jwtExpiresIn = Environment.GetEnvironmentVariable("JWT_EXPIRES_IN");
-
-            // Validar que las variables existen
-            if (string.IsNullOrEmpty(jwtKey) || string.IsNullOrEmpty(jwtIssuer) || string.IsNullOrEmpty(jwtAudience))
-            {
-                throw new InvalidOperationException("JWT configuration values are missing.");
-            }
-
-            // Validar longitud de la clave
-            if (jwtKey.Length < 32)
-            {
-                throw new InvalidOperationException("JWT_KEY must be at least 256 bits long.");
-            }
-
-            // Validar y convertir el tiempo de expiración
-            if (string.IsNullOrEmpty(jwtExpiresIn) || !double.TryParse(jwtExpiresIn, out double expiresInMinutes))
-            {
-                throw new InvalidOperationException("JWT_EXPIRES_IN is missing or invalid.");
-            }
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: jwtIssuer,
-                audience: jwtAudience,
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(expiresInMinutes),
-                signingCredentials: credentials
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return BadRequest(ModelState);
         }
+
+        // Find the user in the database by their NickName.
+        var user = await Context.Users.FirstOrDefaultAsync(item => item.Fullname == userDTO.Fullname);
+        if (user == null)
+        {
+            return Unauthorized("Invalid credentials.");
+        }
+
+        // Verify if the provided password matches the hashed password stored in the database.
+        var passwordResult = _passwordHasher.VerifyHashedPassword(user, user.Password, userDTO.Password);
+        if (passwordResult == PasswordVerificationResult.Failed)
+        {
+            return Unauthorized("Invalid credentials.");
+        }
+
+        // If authentication is successful, generate a JWT token for the user.
+        var token = GenerateJwtToken(user);
+
+        // Return an OK response with the user data and JWT token.
+        return Ok(new
+        {
+            message = "Success",
+            data = new
+            {
+                id = user.Id,
+                name = user.Fullname,
+                email = user.Email,
+                token = token
+            }
+        });
+    }
+
+    // Private method to generate the JWT.
+    private string GenerateJwtToken(User user)
+    {
+        // Create a security key using the secret key from the configuration.
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT_KEY"]));
+
+        // Create signing credentials using the security key and HMAC-SHA256 algorithm.
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        // Define the claims that will be included in the JWT.
+        var claims = new[]
+        {
+            new Claim("Id", user.Id.ToString()), // User Id.
+            new Claim("Name", user.Fullname), // User name.
+            new Claim("Email", user.Email) // User email.
+        };
+
+        // Create the JWT with the configured parameters.
+        var token = new JwtSecurityToken(
+            issuer: _configuration["JWT_ISSUER"], // Token issuer.
+            audience: _configuration["JWT_AUDIENCE"], // Token audience.
+            claims: claims, // Claims to be included in the token.
+            expires: DateTime.Now.AddMinutes(double.Parse(_configuration["JWT_EXPIRES_IN"])), // Token expiration time.
+            signingCredentials: credentials // Credentials for signing the token.
+        );
+
+        // Return the JWT as a string.
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
 

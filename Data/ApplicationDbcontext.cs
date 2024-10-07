@@ -1,4 +1,7 @@
 using ejemploApiConServicios.Models;
+using ejemploApiConServicios.Seeders;
+
+// using ejemploApiConServicios.Seeders;
 using Microsoft.EntityFrameworkCore;
 
 namespace ejemploApiConServicios.Data;
@@ -12,4 +15,12 @@ public class ApplicationDbcontext : DbContext
     {
     }
 
+
+    //esto es para los seeders
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        UserSeeder.Seed(modelBuilder);
+        VehicleSeeder.Seed(modelBuilder);
+    }
 }

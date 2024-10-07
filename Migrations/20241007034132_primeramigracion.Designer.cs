@@ -11,8 +11,8 @@ using ejemploApiConServicios.Data;
 namespace ejemploApiConServicios.Migrations
 {
     [DbContext(typeof(ApplicationDbcontext))]
-    [Migration("20240930123939_NombreDeLaMigracion")]
-    partial class NombreDeLaMigracion
+    [Migration("20241007034132_primeramigracion")]
+    partial class primeramigracion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,32 @@ namespace ejemploApiConServicios.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("ejemploApiConServicios.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext")
+                        .HasColumnName("email");
+
+                    b.Property<string>("Fullname")
+                        .HasColumnType("longtext")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext")
+                        .HasColumnName("password");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("users");
+                });
 
             modelBuilder.Entity("ejemploApiConServicios.Models.Vehicle", b =>
                 {

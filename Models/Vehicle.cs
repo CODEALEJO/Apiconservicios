@@ -9,6 +9,7 @@ namespace ejemploApiConServicios.Models;
 [Table("Vehicles")]
 public class Vehicle
 {
+
     //creacion de la tabla vehicle con sus propiedades
     [Key]
     [Column("id")]
@@ -24,8 +25,9 @@ public class Vehicle
     public double Price { get; set; }
     [Column("color")]
     public string Color { get; set; }
+    public Vehicle() { }
 
-     public Vehicle(string branch, string model, int year, double price, string color)
+    public Vehicle(string branch, string model, int year, double price, string color)
     {
         Branch = branch.ToLower().Trim();
         Model = model.ToLower().Trim();
@@ -34,5 +36,5 @@ public class Vehicle
         Color = color.ToLower().Trim();
     }
 
-    
+
 }

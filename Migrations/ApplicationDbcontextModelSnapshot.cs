@@ -45,6 +45,36 @@ namespace ejemploApiConServicios.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin@example.com",
+                            Fullname = "Administrador",
+                            Password = "$2a$11$d8Pv2B.KO2S1L7mIup6ERewEHEKXu2VY0wG.MfGgMh0TD4wHqHNgW"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "user@example.com",
+                            Fullname = "Usuario Normal",
+                            Password = "$2a$11$pdoIOFIO8.LV5liWSZv6..Igxsw5f.Y34sI9g.JPCyU9QSiD70Xaq"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "anonymous@example.com",
+                            Fullname = "Usuario Anónimo",
+                            Password = "$2a$11$.8DVkpLtNfVUIFDiKCVWdeo1UvghvWeH7dTMQrGYsX9qa0kn/4ASq"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "invite@example.com",
+                            Fullname = "Usuario Invitado",
+                            Password = "$2a$11$nC1vB0SbmTzDfD7ViX2b0OmsOZZkzRz2fbZIWn0OIIzsZq1hvZoW2"
+                        });
                 });
 
             modelBuilder.Entity("ejemploApiConServicios.Models.Vehicle", b =>
@@ -79,6 +109,44 @@ namespace ejemploApiConServicios.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vehicles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Branch = "Toyota",
+                            Color = "black",
+                            Model = "Corolla",
+                            Price = 100.0,
+                            Year = 2022
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Branch = "Honda",
+                            Color = "white",
+                            Model = "Civic",
+                            Price = 200.0,
+                            Year = 2021
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Branch = "Ford",
+                            Color = "red",
+                            Model = "Mustang",
+                            Price = 300.0,
+                            Year = 2023
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Branch = "Nissan",
+                            Color = "blue",
+                            Model = "Leaf",
+                            Price = 150.0,
+                            Year = 2020
+                        });
                 });
 #pragma warning restore 612, 618
         }

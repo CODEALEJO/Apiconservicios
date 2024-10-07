@@ -25,8 +25,11 @@ JWT_EXPIRES_IN = 3 esto es tiempo en minutos
 Para el jwt instalo paquete, pongo en el .env mis cosas, creo una carpeta config y una clase jwt, ahi pego el metodo, para que el metodo funcione debo asegurarme de tener una clase de usuario
 En el program debo de pegar dos cosas grandes para que eso me funcione en el swagger y se pongan los candados
 
-tengo que hacer el login para que me genere de manera correcta el token en el repo de samuel
+tengo que hacer el login para que me genere de manera correcta el token en el repo de samuel(PENDIENTE)
 
 INTERFACES= entonces segun lo que he entendido lo q va en las interfaces es los metodos q se van a realizar 
 SERVICIOS= lo que va en servicios es la consulta con la base de datos 
 CONTROLADORES= lo que va en el controlador es la validacion con data annotation(en pocas palabras se maneja el tema de validaciones y como le vamos a entregar la respuesta al cliente)
+
+Para los Seeders: Debo de crear la carpeta de Seeders y creo las clases de los que necesito seeders le creo una propiedad seed y luego de eso me voy al data
+Debo de poner en mi applicationDbcontext OnModelCreating Para que me creer y llamar a las clases creadas en seeders
